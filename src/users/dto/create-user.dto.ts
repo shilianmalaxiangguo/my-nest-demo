@@ -1,29 +1,20 @@
 import { IsEmail, IsEnum, IsOptional, IsString } from 'class-validator'
+import { UserStatusEnum, UserGenderEnum } from '../enums/user.enum'
 
-export enum UserStatus {
-  Inactivated = 0,
-  Activated = 1,
-}
-
-export enum UserGender {
-  Unknown = 0,
-  Male = 1,
-  Female = 2,
-}
-
+// 创建用户的数据传输对象
 export class CreateUserDto {
-  @IsEmail()
-  email: string
+  @IsEmail()                    // 验证是否为有效的邮箱格式
+  email: string                 // 用户邮箱
 
-  @IsString()
-  @IsOptional()
-  name?: string
+  @IsString()                   // 验证是否为字符串
+  @IsOptional()                 // 该字段是可选的
+  name?: string                 // 用户名称
 
-  @IsEnum(UserStatus)
-  @IsOptional()
-  status?: UserStatus
+  @IsEnum(UserStatusEnum)       // 验证是否为 UserStatusEnum 中的值
+  @IsOptional()                 // 该字段是可选的
+  status?: UserStatusEnum       // 用户状态
 
-  @IsEnum(UserGender)
-  @IsOptional()
-  gender?: UserGender
+  @IsEnum(UserGenderEnum)       // 验证是否为 UserGenderEnum 中的值
+  @IsOptional()                 // 该字段是可选的
+  gender?: UserGenderEnum       // 用户性别
 } 
