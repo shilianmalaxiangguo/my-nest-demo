@@ -1,0 +1,7 @@
+{
+  "extends": "@antfu",
+  "rules": {
+    // 自定义规则
+    "no-console": "off"  // 允许使用 console
+  }
+} 
