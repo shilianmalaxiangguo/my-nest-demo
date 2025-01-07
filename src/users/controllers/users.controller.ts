@@ -11,6 +11,7 @@ import {
   Post,
   BadRequestException,
 } from '@nestjs/common'
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger'
 import { isEmpty, isNil } from 'lodash'
 import { UsersService } from '../services/users.service'
 import { CreateUserDto } from '../dto/create-user.dto'
@@ -24,6 +25,7 @@ import { handleError } from '../../utils/error'
  * 用户控制器
  * 处理所有与用户相关的HTTP请求
  */
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -56,6 +58,8 @@ export class UsersController {
    * @returns 创建成功的响应
    */
   @Post()
+  @ApiOperation({ summary: '创建用户' })
+  @ApiResponse({ status: 201, description: '用户创建成功' })
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() createUserDto: CreateUserDto) {
     try {
@@ -72,6 +76,8 @@ export class UsersController {
   }
 
   @Get()
+  @ApiOperation({ summary: '获取所有用户' })
+  @ApiResponse({ status: 200, description: '获取用户列表成功' })
   async findAll() {
     try {
       const users = await this.usersService.findAll()
