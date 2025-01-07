@@ -1,7 +1,7 @@
 // 用户状态枚举
 export enum UserStatusEnum {
-  Inactivated = 0, // 未激活状态
-  Activated = 1,   // 已激活状态
+  Activated = 1,    // 1 表示激活状态
+  Inactivated = 0   // 0 表示停用状态
 }
 
 // 用户性别枚举

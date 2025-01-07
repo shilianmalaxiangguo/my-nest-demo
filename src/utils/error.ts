@@ -1,5 +1,5 @@
-import { HttpException, HttpStatus } from '@nestjs/common'
-import { ResultCodeEnum } from '../types/enums'
+import { HttpException } from '@nestjs/common'
+import { ResultCodeEnum, HttpStatusEnum } from '../types/enums'
 import { sendResponse } from './response'
 
 /**
@@ -14,7 +14,7 @@ export function handleError(error: any) {
       ResultCodeEnum.BadRequest,
       error.message,
       null,
-      error.getStatus(),
+      HttpStatusEnum.BadRequest,
     )
   }
   
@@ -23,6 +23,6 @@ export function handleError(error: any) {
     ResultCodeEnum.ServerError,
     '服务器内部错误',
     null,
-    HttpStatus.INTERNAL_SERVER_ERROR,
+    HttpStatusEnum.ServerError,
   )
 } 

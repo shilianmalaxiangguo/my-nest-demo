@@ -26,8 +26,14 @@ export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     // 获取请求方法和原始URL
     const { method, originalUrl } = req
+    const requestId = req.headers['x-request-id'] || 'no-id'
     // 记录请求开始时间
     const startTime = Date.now()
+
+    // 记录请求开始
+    this.logger.log(
+      `[${requestId}] --> ${method} ${originalUrl}`,
+    )
 
     /**
      * 监听响应完成事件
@@ -40,14 +46,24 @@ export class LoggerMiddleware implements NestMiddleware {
       const endTime = Date.now()
       const duration = endTime - startTime
 
-      // 使用NestJS的Logger记录请求信息
-      // 格式: [HTTP] GET /users 200 123ms
+      // 记录请求结束
       this.logger.log(
-        `${method} ${originalUrl} ${statusCode} ${duration}ms`,
+        `[${requestId}] <-- ${method} ${originalUrl} ${statusCode} ${duration}ms`,
       )
     })
 
     // 调用下一个中间件或路由处理函数
     next()
   }
+}
+
+// 添加启动日志功能
+export function setupStartupLogger(port: number) {
+  const logger = new Logger('NestApplication')
+  const origin = `http://localhost:${port}`
+
+  logger.log('\n🚀 服务已启动! ✓\n')
+  logger.log(`📡 接口地址: ${origin}`)
+  logger.log(`📘 Swagger文档: ${origin}/api\n`)
+  logger.log('正在监听请求...\n')
 }

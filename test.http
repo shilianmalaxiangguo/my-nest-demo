@@ -1,5 +1,5 @@
 ### Create User
-POST http://localhost:3000/users
+POST http://localhost:5000/users
 Content-Type: application/json
 
 {
@@ -8,13 +8,13 @@ Content-Type: application/json
 }
 
 ### Get All Users
-GET http://localhost:3000/users
+GET http://localhost:5000/users
 
 ### Get User by ID
-GET http://localhost:3000/users/1
+GET http://localhost:5000/users/1
 
 ### Update User
-PATCH http://localhost:3000/users/1
+PATCH http://localhost:5000/users/1
 Content-Type: application/json
 
 {
@@ -22,10 +22,10 @@ Content-Type: application/json
 }
 
 ### Delete User
-DELETE http://localhost:3000/users/1
+DELETE http://localhost:5000/users/1
 
 ### Activate User
-PATCH http://localhost:3000/users/1/activate
+PATCH http://localhost:5000/users/2/activate
 
 ### Deactivate User
-PATCH http://localhost:3000/users/1/deactivate 
+PATCH http://localhost:5000/users/2/deactivate 

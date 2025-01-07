@@ -6,6 +6,7 @@ import { AppService } from './app.service'
 import { UsersModule } from './users/users.module'
 import { PrismaService } from './prisma/prisma.service'
 import { LoggerMiddleware } from './middleware/logger.middleware'
+import { ProxyMiddleware } from './middleware/proxy.middleware'
 
 @Module({
   imports: [
@@ -17,6 +18,8 @@ import { LoggerMiddleware } from './middleware/logger.middleware'
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggerMiddleware).forRoutes('*')
+    consumer
+      .apply(ProxyMiddleware, LoggerMiddleware)
+      .forRoutes('*')
   }
 }

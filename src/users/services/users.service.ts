@@ -93,33 +93,25 @@ export class UsersService {
 
   /**
    * 激活用户
-   * @param id 要激活的用户ID
-   * @returns Promise<User> 返回更新后的用户信息
-   * 
-   * Number() 用于确保枚举值被转换为数字，因为数据库中存储的是数字
+   * @param id 用户ID
+   * @returns 更新后的用户信息
    */
   async activate(id: number) {
-    const data: Prisma.UserUpdateInput = {
-      status: Number(UserStatusEnum.Activated),
-    }
     return this.prisma.user.update({
       where: { id },
-      data,
+      data: { status: UserStatusEnum.Activated }, // 设置为 1
     })
   }
 
   /**
    * 停用用户
-   * @param id 要停用的用户ID
-   * @returns Promise<User> 返回更新后的用户信息
+   * @param id 用户ID
+   * @returns 更新后的用户信息
    */
   async deactivate(id: number) {
-    const data: Prisma.UserUpdateInput = {
-      status: Number(UserStatusEnum.Inactivated),
-    }
     return this.prisma.user.update({
       where: { id },
-      data,
+      data: { status: UserStatusEnum.Inactivated }, // 设置为 0
     })
   }
 } 
