@@ -36,7 +36,6 @@ export class ProxyMiddleware implements NestMiddleware {
     }
 
     // 记录代理信息
-    console.log(`[Proxy] ${req.method} ${req.path} from ${req.ip}`)
     logger.info(`[Proxy] ${req.method} ${req.path} from ${req.ip}`)
     next()
   }
