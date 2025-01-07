@@ -38,7 +38,7 @@ export class UsersService {
    * 
    * prisma.user.findMany() 会生成 SELECT * FROM users SQL语句
    */
-  async findAll() {
+  async findMany() {
     return this.prisma.user.findMany()
   }
 

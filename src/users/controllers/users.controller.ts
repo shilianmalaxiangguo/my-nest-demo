@@ -96,11 +96,9 @@ export class UsersController {
   @Get()
   @ApiOperation({ summary: '获取所有用户' })
   @ApiResponse({ status: HttpStatusEnum.OK, description: '获取用户列表成功' })
-  async findAll() {
+  async findMany() {
     try {
-      // 调用服务获取所有用户
-      const users = await this.usersService.findAll()
-      // 返回成功响应
+      const users = await this.usersService.findMany()
       return sendResponse(
         ResultCodeEnum.Success,
         '获取用户列表成功',
