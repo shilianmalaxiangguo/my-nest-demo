@@ -1,5 +1,6 @@
 import { Injectable, NestMiddleware } from '@nestjs/common'
 import type { Request, Response, NextFunction } from 'express'
+import { logger } from 'src/utils/logger'
 import { v4 as uuidv4 } from 'uuid'
 
 /**
@@ -36,7 +37,7 @@ export class ProxyMiddleware implements NestMiddleware {
 
     // 记录代理信息
     console.log(`[Proxy] ${req.method} ${req.path} from ${req.ip}`)
-
+    logger.info(`[Proxy] ${req.method} ${req.path} from ${req.ip}`)
     next()
   }
 }

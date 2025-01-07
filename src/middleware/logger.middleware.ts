@@ -1,5 +1,9 @@
-import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
+import { Injectable, NestMiddleware } from '@nestjs/common'
 import type { Request, Response, NextFunction } from 'express'
+import { logger } from '../utils/logger'
+
+// 记录应用启动时间
+const appStartTime = Date.now()
 
 /**
  * 日志中间件类
@@ -8,9 +12,6 @@ import type { Request, Response, NextFunction } from 'express'
  */
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  // Logger是NestJS提供的日志工具，'HTTP'是日志的上下文名称
-  private logger = new Logger('HTTP')
-
   /**
    * 中间件处理函数
    * @param req Express的请求对象，包含请求的所有信息
@@ -31,9 +32,7 @@ export class LoggerMiddleware implements NestMiddleware {
     const startTime = Date.now()
 
     // 记录请求开始
-    this.logger.log(
-      `[${requestId}] --> ${method} ${originalUrl}`,
-    )
+    logger.info(`[${requestId}] --> ${method} ${originalUrl}`)
 
     /**
      * 监听响应完成事件
@@ -47,8 +46,8 @@ export class LoggerMiddleware implements NestMiddleware {
       const duration = endTime - startTime
 
       // 记录请求结束
-      this.logger.log(
-        `[${requestId}] <-- ${method} ${originalUrl} ${statusCode} ${duration}ms`,
+      logger.info(
+        `[${requestId}] <-- ${method} ${originalUrl} ${statusCode} ${duration}ms`
       )
     })
 
@@ -59,11 +58,16 @@ export class LoggerMiddleware implements NestMiddleware {
 
 // 添加启动日志功能
 export function setupStartupLogger(port: number) {
-  const logger = new Logger('NestApplication')
   const origin = `http://localhost:${port}`
+  const endTime = Date.now()
+  const duration = ((endTime - appStartTime) / 1000).toFixed(2) // 转换为秒，保留2位小数
 
-  logger.log('\n🚀 服务已启动! ✓\n')
-  logger.log(`📡 接口地址: ${origin}`)
-  logger.log(`📘 Swagger文档: ${origin}/api\n`)
-  logger.log('正在监听请求...\n')
+  logger.info('\n----------------------------------')
+  logger.info(`🚀 服务启动成功! ✓`)
+  logger.info(`⌚ 启动时间: ${new Date().toLocaleString()}`)
+  logger.info(`⏱️  耗时: ${duration}秒`)
+  logger.info(`📡 接口地址: ${origin}`)
+  logger.info(`📘 Swagger文档: ${origin}/api`)
+  logger.info('----------------------------------\n')
+  logger.info('正在监听请求...\n')
 }
